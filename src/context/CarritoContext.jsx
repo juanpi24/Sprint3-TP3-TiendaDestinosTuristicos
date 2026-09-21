@@ -23,11 +23,15 @@ export function CarritoProvider({ children }) {
 
 /**
  * Hook consumidor. Es la ÚNICA forma permitida de leer el carrito desde
+ * un componente — nunca useCarrito() directo fuera de este archivo, porque cada llamada a useCarrito() crea su propia instancia de estado.
   *
  * El guardia de acá abajo es lo que convierte un error silencioso
  * en un error ruidoso: si alguien hace useCarritoContext() fuera de
  * <CarritoProvider>, se rompe con un mensaje claro.
  */
+// El archivo también exporta el Provider; este hook debe permanecer aquí para
+// compartir exactamente la misma instancia del contexto.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCarritoContext() {
   const contexto = useContext(CarritoContext);
 
