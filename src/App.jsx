@@ -6,6 +6,7 @@ import { Footer } from './components/layout/Footer.jsx';
 import { CarritoModal } from './components/CarritoModal.jsx';
 import { Tienda } from './views/Tienda.jsx';
 import { Checkout } from './views/Checkout.jsx';
+import { Confirmacion } from './views/Confirmacion.jsx';
 
 // este componente es SOLO layout + qué vista se
 // muestra. Nada de localStorage, JSON.parse/stringify, filtros del
@@ -15,7 +16,7 @@ import { Checkout } from './views/Checkout.jsx';
 
 function App() {
   const [vista, setVista] = useState(VISTAS.TIENDA);
-  const [, setPedidoConfirmado] = useState(null);
+  const [pedidoConfirmado, setPedidoConfirmado] = useState(null);
   const [carritoAbierto, , abrirCarrito, cerrarCarrito] = useToggle(false);
 
   const irACheckout = () => {
@@ -38,6 +39,8 @@ function App() {
           }}
         />
       )}
+
+      {vista === VISTAS.CONFIRMACION && <Confirmacion pedido={pedidoConfirmado} />}
 
       <CarritoModal
         isOpen={carritoAbierto}
