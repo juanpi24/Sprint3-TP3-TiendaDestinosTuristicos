@@ -3,9 +3,16 @@
  * de Checkout.jsx — acá no hay que tocar el carrito para nada, solo
  * mostrar el nombre de la persona que compró.
  */
-export function Confirmacion({ pedido }) {
+export function Confirmacion({ pedido,onVolver }) {
   return (
     <main className="max-w-md mx-auto px-4 py-16 text-center flex flex-col items-center gap-3">
+       <button
+        onClick={onVolver}
+        className="self-start text-sm text-on-surface-variant hover:text-on-surface cursor-pointer flex items-center gap-1"
+      >
+        ← Volver a la tienda
+      </button>
+      
       <span className="material-symbols-outlined text-primary text-5xl">
         check_circle
       </span>

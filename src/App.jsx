@@ -40,7 +40,8 @@ function App() {
         />
       )}
 
-      {vista === VISTAS.CONFIRMACION && <Confirmacion pedido={pedidoConfirmado} />}
+      {vista === VISTAS.CONFIRMACION && 
+      <Confirmacion pedido={pedidoConfirmado} onVolver={() => setVista(VISTAS.TIENDA)} />}
 
       <CarritoModal
         isOpen={carritoAbierto}
