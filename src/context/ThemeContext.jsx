@@ -44,6 +44,9 @@ export function ThemeProvider({ children }) {
  * afuera del Provider, falla explícito en vez de devolver undefined y
  * romper más adelante con un error críptico.
  */
+// El hook se mantiene en este módulo para conservar la API pública del contexto.
+// La separación en otro archivo requiere actualizar los imports de los consumidores.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useThemeContext() {
   const contexto = useContext(ThemeContext);
 
