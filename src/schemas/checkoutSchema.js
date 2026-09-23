@@ -13,6 +13,7 @@ export const checkoutSchema = z
       .string()
       .trim()
       .min(1, 'Ingresá tu nombre completo')
+      .regex(/^[a-zA-Z\s]+$/, 'El nombre solo puede contener letras y espacios')
       .min(3, 'El nombre tiene que tener al menos 3 caracteres'),
 
     email: z
