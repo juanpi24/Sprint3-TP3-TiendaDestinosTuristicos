@@ -6,7 +6,7 @@ import { useEffect } from 'react';
  */
 
 // 💡Cambiar el 'false' a 'true' para probarlo en 5 segundos
-const enModoPrueba = false; 
+const enModoPrueba = true; 
 const TIEMPO_PRUEBA = 5 * 1000;       // 5 segundos
 const TIEMPO_PRODUCCION = 5 * 60 * 1000; // 5 minutos (5 * 60 segundos * 1000 ms)
 
