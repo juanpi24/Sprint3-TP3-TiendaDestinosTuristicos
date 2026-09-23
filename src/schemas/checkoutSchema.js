@@ -29,6 +29,7 @@ export const checkoutSchema = z
       .regex(/^[0-9]+$/, 'El teléfono solo puede tener números')
       .min(8, 'El teléfono tiene que tener al menos 8 dígitos'),
 
+     // La dirección es opcional por defecto y limpia los espacios al principio y al final. La regla de "obligatoria si el método de envío es a domicilio" se resuelve en .superRefine() más abajo.
     metodoEnvio: z.enum(['domicilio', 'retiro'], {
       errorMap: () => ({ message: 'Elegí un método de envío' }),
     }),
@@ -55,6 +56,8 @@ export const checkoutSchema = z
   // el lugar correcto para una regla que depende de dos campos a la
   // vez: "la dirección es obligatoria SOLO SI el envío es a domicilio".
   .superRefine((datos, ctx) => {
+
+    // Si direccion es undefined o vino vacío después del .trim(), se considera vacía
     const direccionVacia = !datos.direccion || datos.direccion.length === 0;
 
     if (datos.metodoEnvio === 'domicilio' && direccionVacia) {
