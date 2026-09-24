@@ -17,6 +17,7 @@ export function ProductoCard({ producto }) {
   const sinStock = producto.stock === 0;
   const enElTope = cantidadEnCarrito >= producto.stock;
 
+  // Variables para mostrar el estado del botón y su texto según la situación del producto
   const textoBoton = sinStock
     ? 'Sin stock'
     : enElTope
@@ -25,6 +26,16 @@ export function ProductoCard({ producto }) {
         ? `En el carrito (${cantidadEnCarrito})`
         : 'Agregar';
 
+
+  // Variables para cambiar el color del botón según la situación del producto
+  const colorBoton = sinStock
+    ? 'bg-outline-variant/30 text-on-surface-variant/50 cursor-not-allowed' // Gris Apagado y sutil
+    : enElTope
+      ? 'bg-error text-on-primary dark:text-bg-surface'                      // Advertencia/Error 
+      : cantidadEnCarrito > 0
+        ? 'bg-tertiary text-on-primary hover:bg-tertiary/90'                 // Distingue que ya hay unidades en el carrito
+        : 'bg-primary text-on-primary hover:bg-primary-fixed-dim';           // Estado original "Agregar"    
+  
   // CONTROL INTERCEPTOR DEL CLICK
   const manejarAgregarAlCarrito = () => {
     if (sinStock || enElTope) {
@@ -65,7 +76,7 @@ export function ProductoCard({ producto }) {
             /*onClick={() => agregar(producto)}
             disabled={sinStock || enElTope}*/
             onClick={manejarAgregarAlCarrito} // Ejecuta el interceptor
-            className="px-3 py-1.5 text-sm font-medium rounded-full bg-primary text-on-primary hover:bg-primary-fixed-dim transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`px-3 py-1.5 text-sm font-medium rounded-full ${colorBoton} transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
           >
             {textoBoton}
           </button>
