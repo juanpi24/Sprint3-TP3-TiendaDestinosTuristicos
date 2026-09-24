@@ -12,24 +12,23 @@ export const checkoutSchema = z
     nombre: z
       .string()
       .trim()
-      .min(1, 'Ingresá tu nombre completo')
-      .regex(/^[a-zA-Z\s]+$/, 'El nombre solo puede contener letras y espacios')
+      .min(1, 'El nombre es obligatorio')
+      .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/, 'El nombre solo puede contener letras y espacios')
       .min(3, 'El nombre tiene que tener al menos 3 caracteres'),
 
     email: z
       .string()
       .trim()
-      .min(1, 'Ingresá tu email')
-      .email('Ingresá un email válido'),
+      .min(1, 'El email es obligatorio')
+      .email('El email no es válido'),
 
     telefono: z
       .string()
       .trim()
-      .min(1, 'Ingresá tu teléfono')
+      .min(1, 'El teléfono es obligatorio')
       .regex(/^[0-9]+$/, 'El teléfono solo puede tener números')
       .min(8, 'El teléfono tiene que tener al menos 8 dígitos'),
 
-     // La dirección es opcional por defecto y limpia los espacios al principio y al final. La regla de "obligatoria si el método de envío es a domicilio" se resuelve en .superRefine() más abajo.
     metodoEnvio: z.enum(['domicilio', 'retiro'], {
       errorMap: () => ({ message: 'Elegí un método de envío' }),
     }),
@@ -52,9 +51,8 @@ export const checkoutSchema = z
       message: 'Tenés que aceptar los términos para continuar',
     }),
   })
-  // superRefine ve el objeto ENTERO (no un campo aislado), así que es
-  // el lugar correcto para una regla que depende de dos campos a la
-  // vez: "la dirección es obligatoria SOLO SI el envío es a domicilio".
+  // superRefine ve el objeto ENTERO (no un campo aislado),
+  // "la dirección es obligatoria SOLO SI el envío es a domicilio".
   .superRefine((datos, ctx) => {
 
     // Si direccion es undefined o vino vacío después del .trim(), se considera vacía
