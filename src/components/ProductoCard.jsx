@@ -1,5 +1,6 @@
 import { useCarritoContext } from '../context/CarritoContext.jsx';
 import { formatearPrecio } from '../utils/formato.js';
+import { useToast } from '../context/ToastContext.jsx'; // 👈 Conectamos el emisor
 
 /**
  * Adaptado de ItemCard.jsx del TP2. En vez de un botón "Agregar/Quitar"
@@ -8,6 +9,7 @@ import { formatearPrecio } from '../utils/formato.js';
  */
 export function ProductoCard({ producto }) {
   const { carrito, agregar } = useCarritoContext();
+  const { mostrarToast } = useToast(); // Traemos la función disparadora
 
   // Derivado: nada de esto se guarda en un estado propio del componente.
   const itemEnCarrito = carrito.find((item) => item.id === producto.id);
@@ -22,6 +24,16 @@ export function ProductoCard({ producto }) {
       : cantidadEnCarrito > 0
         ? `En el carrito (${cantidadEnCarrito})`
         : 'Agregar';
+
+  // CONTROL INTERCEPTOR DEL CLICK
+  const manejarAgregarAlCarrito = () => {
+    if (sinStock || enElTope) {
+      // Si el cliente intenta cliquear de más, disparamos el cartel en vez de colgar la app
+      mostrarToast(`No hay más stock disponible de "${producto.title}"`);
+      return;
+    }
+    agregar(producto);
+  };
 
   return (
     <article className="bg-surface-container rounded-default overflow-hidden border border-outline-variant/30 flex flex-col">
@@ -50,8 +62,9 @@ export function ProductoCard({ producto }) {
           </span>
 
           <button
-            onClick={() => agregar(producto)}
-            disabled={sinStock || enElTope}
+            /*onClick={() => agregar(producto)}
+            disabled={sinStock || enElTope}*/
+            onClick={manejarAgregarAlCarrito} // Ejecuta el interceptor
             className="px-3 py-1.5 text-sm font-medium rounded-full bg-primary text-on-primary hover:bg-primary-fixed-dim transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {textoBoton}
