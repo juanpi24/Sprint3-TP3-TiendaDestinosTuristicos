@@ -31,4 +31,14 @@ export function ToastProvider({ children }) {
 
 //El guardia de acá abajo es lo que convierte un error silencioso en un error ruidoso: si alguien hace useToast() fuera de <ToastContext.Provider>, se rompe con un mensaje claro.
 // eslint-disable-next-line react-refresh/only-export-components
-export const useToast = () => useContext(ToastContext);
+export const useToast = () => {
+  const context = useContext(ToastContext);
+  
+  // El verdadero guardia ruidoso:
+  if (!context) {
+    throw new Error('useToast debe ser utilizado dentro de un ToastProvider');
+  }
+  
+  return context;
+};
+
