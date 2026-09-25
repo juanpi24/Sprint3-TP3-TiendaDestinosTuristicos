@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 
 const ToastContext = createContext();
-const TIEMPO_TOAST = 3 * 1000;       // 5 segundos
+const TIEMPO_TOAST = 3 * 1000;       // 3 segundos
 export function ToastProvider({ children }) {
   const [toast, setToast] = useState(null); // Formato: { mensaje: string, tipo: string }
 
@@ -13,7 +13,7 @@ export function ToastProvider({ children }) {
   useEffect(() => {
     if (!toast) return; //si no hay toast, no hacemos nada    
 
-    // Configura el borrado a los 5000ms
+    // Configura el borrado a los 3000ms
     const timer = setTimeout(() => {
       setToast(null);
     }, TIEMPO_TOAST);
