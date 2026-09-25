@@ -33,7 +33,7 @@ export function ProductoCard({ producto }) {
     : enElTope
       ? 'bg-error text-on-primary dark:text-bg-surface'                      // Advertencia/Error 
       : cantidadEnCarrito > 0
-        ? 'bg-tertiary text-on-primary hover:bg-tertiary/90'                 // Distingue que ya hay unidades en el carrito
+        ? 'bg-primary-fixed-dim text-on-primary hover:bg-primary-fixed-dim/90'                 // Distingue que ya hay unidades en el carrito
         : 'bg-primary text-on-primary hover:bg-primary-fixed-dim';           // Estado original "Agregar"    
   
   // CONTROL INTERCEPTOR DEL CLICK
