@@ -20,7 +20,8 @@ export const checkoutSchema = z
       .string()
       .trim()
       .min(1, 'El email es obligatorio')
-      .email('El email no es válido'),
+      .pipe(z.email('El email no es válido')), //.pipe() sirve para conectar dos esquemas (.trim()) independientes en una "tubería" de validación (pipeline). toma la salida del primer esquema y se la pasa directamente como entrada al segundo esquema
+      //.email('El email no es válido'),
 
     telefono: z
       .string()
