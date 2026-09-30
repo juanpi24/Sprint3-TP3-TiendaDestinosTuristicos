@@ -1,32 +1,36 @@
 import { useEffect } from 'react';
+
 /**
  * Pantalla de "gracias". El carrito ya se vació dentro del onSubmit
  * de Checkout.jsx — acá no hay que tocar el carrito para nada, solo
  * mostrar el nombre de la persona que compró.
  */
 
-// 💡Cambiar el 'false' a 'true' para probarlo en 5 segundos
-const enModoPrueba = true; 
-const TIEMPO_PRUEBA = 5 * 1000;       // 5 segundos
-const TIEMPO_PRODUCCION = 5 * 60 * 1000; // 5 minutos (5 * 60 segundos * 1000 ms)
+// 💡 Cambiar el 'false' a 'true' para probarlo en 5 segundos
+const EN_MODO_PRUEBA = true; 
+const TIEMPO_PRUEBA = 5 * 1000;         // 5 segundos
+const TIEMPO_PRODUCCION = 5 * 60 * 1000; // 5 minutos
 
-export function Confirmacion({ pedido,onVolver }) {
+export function Confirmacion({ pedido, onVolver }) {
 
   useEffect(() => {
-    const tiempoEspera = enModoPrueba ? TIEMPO_PRUEBA : TIEMPO_PRODUCCION;
+    // Definimos el tiempo según el modo actual
+    const tiempoEspera = EN_MODO_PRUEBA ? TIEMPO_PRUEBA : TIEMPO_PRODUCCION;
 
     // Configura el temporizador automático
     const temporizador = setTimeout(() => {
       onVolver();
     }, tiempoEspera);
 
-    // Limpia el temporizador si el componente se desmonta antes
+    // Limpia el temporizador si el componente se desmonta antes de que termine el tiempo
     return () => clearTimeout(temporizador);
-  }, [onVolver]);
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Array vacío: El temporizador se crea una sola vez al mostrar la pantalla
 
   return (
     <main className="max-w-md mx-auto px-4 py-16 text-center flex flex-col items-center gap-3">
-       <button
+      <button
         onClick={onVolver}
         className="self-start text-sm text-on-surface-variant hover:text-on-surface cursor-pointer flex items-center gap-1"
       >
