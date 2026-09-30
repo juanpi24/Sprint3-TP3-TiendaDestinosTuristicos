@@ -60,7 +60,7 @@ export const checkoutSchema = z
 
     if (datos.metodoEnvio === 'domicilio' && direccionVacia) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom", // Ahora acepta cualquier string directamente
         path: ['direccion'], // ← esto hace que el error caiga en errors.direccion
         message: 'La dirección es obligatoria',
       });
