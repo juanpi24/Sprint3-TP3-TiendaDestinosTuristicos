@@ -1,4 +1,4 @@
-# 🧳 Rutas AR — Tienda de Paquetes Turísticos
+# 🧳 Rutas AR — Tienda de Paquetes Turísticos 2026
 
 Aplicación web desarrollada con **React + Vite** que permite explorar paquetes turísticos para distintos destinos de Argentina, agregarlos a un carrito de compras, modificar cantidades y completar una compra mediante un proceso de checkout validado.
 
@@ -8,8 +8,7 @@ Este proyecto corresponde al **Trabajo Práctico Sprint 3** y representa la evol
 
 ## 🌎 Demo Online Netlify
 
-🔗 **Deploy:** (https://tiendadestinosturisticos.netlify.app/)
----
+## 🔗 **Deploy:** (https://tiendadestinosturisticos.netlify.app/)
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -28,16 +27,16 @@ Este proyecto corresponde al **Trabajo Práctico Sprint 3** y representa la evol
 
 ## 📦 Dependencias Principales
 
-| Dependencia | Uso |
-|------------|-----|
-| React | Construcción de interfaces de usuario |
-| Vite | Bundler y entorno de desarrollo |
-| Tailwind CSS | Estilos utilitarios y diseño responsive |
-| React Hook Form | Gestión eficiente de formularios |
-| Zod | Validación de datos mediante schemas |
+| Dependencia         | Uso                                     |
+| ------------------- | --------------------------------------- |
+| React               | Construcción de interfaces de usuario   |
+| Vite                | Bundler y entorno de desarrollo         |
+| Tailwind CSS        | Estilos utilitarios y diseño responsive |
+| React Hook Form     | Gestión eficiente de formularios        |
+| Zod                 | Validación de datos mediante schemas    |
 | @hookform/resolvers | Integración entre React Hook Form y Zod |
-| Context API | Manejo de estado global |
-| LocalStorage | Persistencia de datos del usuario |
+| Context API         | Manejo de estado global                 |
+| LocalStorage        | Persistencia de datos del usuario       |
 
 ---
 
@@ -189,14 +188,14 @@ Hook de dominio que encapsula toda la lógica del carrito.
 
 ```js
 {
-  carrito,
-  cantidadTotal,
-  total,
-  estaEnElCarrito,
-  agregar,
-  cambiarCantidad,
-  quitar,
-  vaciar
+  (carrito,
+    cantidadTotal,
+    total,
+    estaEnElCarrito,
+    agregar,
+    cambiarCantidad,
+    quitar,
+    vaciar);
 }
 ```
 
@@ -216,12 +215,7 @@ Hook reutilizable para estados booleanos.
 ### Devuelve
 
 ```js
-[
-  estado,
-  toggle,
-  abrir,
-  cerrar
-]
+[estado, toggle, abrir, cerrar];
 ```
 
 ### Se utiliza para
@@ -318,8 +312,8 @@ Estas props atravesarían componentes intermedios que no las consumen directamen
 Cada componente obtiene únicamente lo que necesita mediante:
 
 ```js
-useCarritoContext()
-useThemeContext()
+useCarritoContext();
+useThemeContext();
 ```
 
 De esta forma:
@@ -416,6 +410,45 @@ npm run build
 ```bash
 npm run preview
 ```
+
+---
+
+# ✨ Funcionalidades adicionales
+
+Esta sección amplía la documentación anterior con detalles del flujo actual de compra y de las funciones incorporadas a la aplicación.
+
+## Control de stock y avisos
+
+- Cada paquete muestra si no tiene stock, si ya se agregó al carrito o si alcanzó el máximo disponible.
+- No se permite agregar ni incrementar unidades por encima del stock del producto.
+- Si se intenta agregar un producto sin stock o que ya llegó a su límite, aparece un aviso global durante unos segundos. El aviso puede mostrarse desde cualquier vista.
+- El contexto de notificaciones (`ToastContext`) centraliza la publicación y visualización de estos mensajes.
+
+## Carrito y protección de acciones
+
+- Las cantidades del carrito se mantienen entre cero y el stock disponible; al reducir una cantidad a cero, el producto se elimina.
+- Las acciones para vaciar el carrito y avanzar al checkout permanecen deshabilitadas mientras está vacío.
+- Antes de vaciar un carrito con productos, se solicita confirmación.
+- Al confirmar un pedido, el carrito se vacía y sus productos, cantidades y total se conservan en los datos del pedido mostrado en la pantalla final.
+
+## Detalles del checkout
+
+- El resumen del pedido muestra los paquetes, sus cantidades, subtotales y el total antes de confirmar.
+- Se puede elegir entre envío a domicilio y retiro en el local. La dirección se solicita y valida únicamente para el envío a domicilio.
+- Se validan nombre, email y teléfono; también es necesario aceptar los términos. Las notas son opcionales y admiten hasta 200 caracteres.
+- Los campos y mensajes de error se administran con React Hook Form y el schema de Zod.
+
+## Confirmación del pedido
+
+- La pantalla final muestra el nombre del cliente y el email informado, junto con la confirmación del pedido.
+- Incluye una cuenta regresiva para regresar automáticamente a la tienda y permite volver antes con el botón correspondiente.
+- Actualmente está activo el modo de prueba, configurado para regresar después de 5 segundos. El código conserva un tiempo de 5 minutos para el modo de producción.
+- El checkout arma y muestra el pedido dentro de la aplicación; no integra una pasarela de pago ni envía emails.
+
+## Preferencia inicial del tema
+
+- Si todavía no existe una preferencia guardada, la aplicación toma inicialmente el tema claro u oscuro configurado en el sistema operativo.
+- Luego, la selección manual se guarda en LocalStorage y se aplica globalmente.
 
 ---
 
